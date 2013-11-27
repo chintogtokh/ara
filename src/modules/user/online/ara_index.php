@@ -55,11 +55,11 @@ if (isset($_GET["nas"]) && $nasName != $_GET["nas"]) {
 }
 
 foreach ($sessions as $session) {
-	$toPrint1[$session["NASIPAddress"]][] = array(
-		"user_name" => $session["UserName"],
-		"user_time" => secToStr($session["RealSessionTime"]),
-		"user_ip" => $session["FramedIPAddress"],
-		"user_mac" => $session["CallingStationId"]
+	$toPrint1[$session["nasipaddress"]][] = array(
+		"user_name" => $session["username"],
+		"user_time" => secToStr($session["realsessiontime"]),
+		"user_ip" => $session["framedipaddress"],
+		"user_mac" => $session["callingstationid"]
 	);
 }
 

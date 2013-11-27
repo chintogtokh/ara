@@ -132,6 +132,7 @@ $i18n = array(
 	"i18n_user_stats" => "user stats",
 	"i18n_users" => "users",
 	"i18n_user" => "user",
+	"i18n_user_real" => "real name",
 	"i18n_value" => "value",
 	"i18n_weekly" => "last week",
 	"i18n_welcome" => "welcome",

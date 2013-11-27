@@ -213,6 +213,7 @@ if (isset($_GET["search"]) && !$_GET["search"] == "") {
 		chdir($old_dir);
 		$sessions = getAccounting(SQL_ACCT_COLUMN_USER,
 			$_GET["value"], $_GET["from"], $_GET["to"] - 1);
+
 		break;
 
 	case "online-at":
@@ -264,6 +265,7 @@ if (isset($_GET["search"]) && !$_GET["search"] == "") {
 		$unique[] = $session[$unique_table];
 		$toPrint[] = array(
 			"start" => $session[SQL_ACCT_COLUMN_STARTTIME],
+			"start" => $session[acctstarttime],
 			"end" => $session[SQL_ACCT_COLUMN_STOPTIME],
 			"login" => $session[SQL_ACCT_COLUMN_USER],
 			"login_url" => generateUrl(
@@ -280,27 +282,27 @@ if (isset($_GET["search"]) && !$_GET["search"] == "") {
 				"highlight" : "",
 			"download" => bytesToStr($session[SQL_ACCT_COLUMN_DOWNLOAD]),
 			"upload" => bytesToStr($session[SQL_ACCT_COLUMN_UPLOAD]),
-			"workstation" => $session["CallingStationId"],
+			"workstation" => $session["callingstationid"],
 			"workstation_url" => generateUrl(
 				array(
 					"from" => $_GET["from"],
 					"to" => $_GET["to"],
 					"search" => "workstation",
-					"value" => $session["CallingStationId"]
+					"value" => $session["callingstationid"]
 				)
 			),
-			"acct_nas" => $session["NASIPAddress"],
-			"acct_nas_descr" => $nas_ip_to_descr[$session["NASIPAddress"]],
-			"port" => $session["NASPortId"],
-		    "nas_short" => $nas_ip_to_name[$session["NASIPAddress"]] == "" ?
-								$session["NASIPAddress"] :
-								$nas_ip_to_name[$session["NASIPAddress"]],
+			"acct_nas" => $session["nasipaddress"],
+			"acct_nas_descr" => $nas_ip_to_descr[$session["nasipaddress"]],
+			"port" => $session["nasportid"],
+		    "nas_short" => $nas_ip_to_name[$session["nasipaddress"]] == "" ?
+								$session["nasipaddress"] :
+								$nas_ip_to_name[$session["nasipaddress"]],
 			"nas_url" => generateUrl(
 				array(
 					"from" => $_GET["from"],
 					"to" => $_GET["to"],
 					"search" => "nas-ip",
-					"value" => $session["NASIPAddress"]
+					"value" => $session["nasipaddress"]
 				)
 			),
 			"online_at_start_url" => generateUrl(
@@ -311,13 +313,13 @@ if (isset($_GET["search"]) && !$_GET["search"] == "") {
 					"value" => $session[SQL_ACCT_COLUMN_STARTTIME]
 				)
 			),
-			"ip" => $session["FramedIPAddress"],
+			"ip" => $session["framedipaddress"],
 			"ip_url" => generateUrl(
 				array(
 					"from" => $_GET["from"],
 					"to" => $_GET["to"],
 					"search" => "ip",
-					"value" => $session["FramedIPAddress"]
+					"value" => $session["framedipaddress"]
 				)
 			)
 		);

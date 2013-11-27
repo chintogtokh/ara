@@ -36,26 +36,50 @@ define("SQL_NAS_COLUMN_SECRET", "secret");
 define("SQL_NAS_COLUMN_COMMUNITY", "community");
 define("SQL_NAS_COLUMN_DESCRIPTION", "description");
 
-define("SQL_ACCT_COLUMN_STARTTIME", "AcctStartTime");
-define("SQL_ACCT_COLUMN_STOPTIME", "AcctStopTime");
-define("SQL_ACCT_COLUMN_NASIP", "NASIPAddress");
+/*define("SQL_ACCT_COLUMN_STARTTIME", "acctstarttime");
+define("SQL_ACCT_COLUMN_STOPTIME", "acctstoptime");
+define("SQL_ACCT_COLUMN_NASIP", "nasipaddress");
 define("SQL_ACCT_COLUMN_USERIP", "FramedIPAddress");
-define("SQL_ACCT_COLUMN_USER", "UserName");
+define("SQL_ACCT_COLUMN_USER", "username");
 define("SQL_ACCT_COLUMN_DOWNLOAD", "AcctOutputOctets");
 define("SQL_ACCT_COLUMN_UPLOAD", "AcctInputOctets");
-define("SQL_ACCT_COLUMN_SESSIONTIME", "AcctSessionTime");
+define("SQL_ACCT_COLUMN_SESSIONTIME", "AcctSessionTime");*/
+//
+define("SQL_ACCT_COLUMN_STARTTIME", "acctstarttime");
+define("SQL_ACCT_COLUMN_STOPTIME", "acctstoptime");
+define("SQL_ACCT_COLUMN_NASIP", "nasipaddress");
+define("SQL_ACCT_COLUMN_USERIP", "framedipaddress");
+define("SQL_ACCT_COLUMN_USER", "username");
+define("SQL_ACCT_COLUMN_DOWNLOAD", "acctoutputoctets");
+define("SQL_ACCT_COLUMN_UPLOAD", "acctinputoctets");
+define("SQL_ACCT_COLUMN_SESSIONTIME", "acctsessiontime");
+
+//
 /* fake column for time from stat to now() */
 /* TODO: rename to ActiveTime or something */
-define("SQL_ACCT_COLUMN_ACTIVETIME", "RealSessionTime");
+
+
+/*define("SQL_ACCT_COLUMN_ACTIVETIME", "realsessiontime");
 define("SQL_ACCT_COLUMN_CALLINGSTATION", "CallingStationId");
 
-define("SQL_RADCHECK_COLUMN_USER", "UserName");
-define("SQL_RADREPLY_COLUMN_USER", "UserName");
-define("SQL_RADGROUPCHECK_COLUMN_GROUP", "GroupName");
-define("SQL_RADGROUPREPLY_COLUMN_GROUP", "GroupName");
-define("SQL_USERGROUP_COLUMN_USER", "UserName");
-define("SQL_USERGROUP_COLUMN_GROUP", "GroupName");
+define("SQL_RADCHECK_COLUMN_USER", "username");
+define("SQL_RADREPLY_COLUMN_USER", "username");
+define("SQL_RADGROUPCHECK_COLUMN_GROUP", "groupname");
+define("SQL_RADGROUPREPLY_COLUMN_GROUP", "groupname");
+define("SQL_USERGROUP_COLUMN_USER", "username");
+define("SQL_USERGROUP_COLUMN_GROUP", "groupname");*/
+//
+define("SQL_ACCT_COLUMN_ACTIVETIME", "realsessiontime");
+define("SQL_ACCT_COLUMN_CALLINGSTATION", "callingstationid");
 
+define("SQL_RADCHECK_COLUMN_USER", "username");
+define("SQL_RADREPLY_COLUMN_USER", "username");
+define("SQL_RADGROUPCHECK_COLUMN_GROUP", "groupname");
+define("SQL_RADGROUPREPLY_COLUMN_GROUP", "groupname");
+define("SQL_USERGROUP_COLUMN_USER", "username");
+define("SQL_USERGROUP_COLUMN_GROUP", "groupname");
+
+//
 if ($config["sql_user_extension"]) {
 	global $config;
 	require 'sql-user-ext/' . $config["sql_user_extension_name"] . ".php";
@@ -68,7 +92,7 @@ if ($config["sql_user_extension"]) {
  */
 
 /* returns plain array of all user */
-function getUserNames()
+function getusernames()
 {
 	global $config;
 
@@ -156,7 +180,7 @@ function getGroupUsersPairs()
 }
 
 /* returns plain array of all groups */
-function getGroupNames()
+function getgroupnames()
 {
 	global $config;
 
@@ -259,7 +283,7 @@ function getUserReplies($user)
 		"SELECT * " .
 			"FROM `" . $config["sql_table_radreply"] . "` " .
 		"WHERE " .
-			"UserName = '" . sqlEscape($user) . "'"
+			"username = '" . sqlEscape($user) . "'"
 	);
 }
 
@@ -271,7 +295,7 @@ function getGroupReplies($group)
 		"SELECT * " .
 			"FROM `" . $config["sql_table_radgroupreply"] . "` " .
 		"WHERE " .
-			"GroupName = '" . sqlEscape($group) . "'"
+			"groupname = '" . sqlEscape($group) . "'"
 	);
 }
 
@@ -293,12 +317,12 @@ function modUserTableRow($user, $tableName, $reId, $reAttr, $reOp, $reVal)
 	sqlQuery(
 		"UPDATE `" . $config["sql_table_rad" . $tableName] . "` " .
 		"SET " .
-			"`Attribute` = '" . sqlEscape($reAttr) . "', " .
+			"`attribute` = '" . sqlEscape($reAttr) . "', " .
 			"`op` = '" . sqlEscape($reOp) ."', " .
-			"`Value` = '" . sqlEscape($reVal) ."' " .
+			"`value` = '" . sqlEscape($reVal) ."' " .
 		"WHERE " .
 			"`id` = " . sqlEscape($reId) . " AND " .
-			"`UserName` = '" . sqlEscape($user) . "' " .
+			"`username` = '" . sqlEscape($user) . "' " .
 		"LIMIT 1"
 	);
 }
@@ -313,8 +337,8 @@ function addUserTableRow($user, $tableName, $reAttr, $reOp, $reVal)
 
 	sqlQuery(
 		"INSERT INTO `" . $config["sql_table_rad" . $tableName] . "` " .
-			"(UserName, Attribute, op, Value) " .
-		"VALUES (" .
+			"(username, attribute, op, value) " .
+		"valueS (" .
 			"'" . sqlEscape($user) . "', " .
 			"'" . sqlEscape($reAttr) . "', " .
 			"'" . sqlEscape($reOp) . "', " .
@@ -349,12 +373,12 @@ function modGroupTableRow($group, $tableName, $reId, $reAttr, $reOp, $reVal)
 	sqlQuery(
 		"UPDATE `" . $config["sql_table_radgroup" . $tableName] . "` " .
 		"SET " .
-			"`Attribute` = '" . sqlEscape($reAttr) . "', " .
+			"`attribute` = '" . sqlEscape($reAttr) . "', " .
 			"`op` = '" . sqlEscape($reOp) ."', " .
-			"`Value` = '" . sqlEscape($reVal) ."' " .
+			"`value` = '" . sqlEscape($reVal) ."' " .
 		"WHERE " .
 			"`id` = " . sqlEscape($reId) . " AND " .
-			"`GroupName` = '" . sqlEscape($group) . "' " .
+			"`groupname` = '" . sqlEscape($group) . "' " .
 		"LIMIT 1"
 	);
 }
@@ -369,8 +393,8 @@ function addGroupTableRow($group, $tableName, $reAttr, $reOp, $reVal)
 
 	sqlQuery(
 		"INSERT INTO `" . $config["sql_table_radgroup" . $tableName] . "` " .
-			"(GroupName, Attribute, op, Value) " .
-		"VALUES (" .
+			"(groupname, attribute, op, value) " .
+		"valueS (" .
 			"'" . sqlEscape($group) ."', " .
 			"'" . sqlEscape($reAttr) . "', " .
 			"'" . sqlEscape($reOp)   . "', " .
@@ -389,7 +413,7 @@ function delGroupTableRow($user, $tableName, $reId)
 }
 
 /* returns void */
-function changeUserName($name, $newName)
+function changeusername($name, $newName)
 {
 	global $config;
 
@@ -402,9 +426,9 @@ function changeUserName($name, $newName)
 	sqlQuery(
 		"UPDATE `" . $config["sql_table_usergroup"] . "` " .
 		"SET " .
-			"`UserName` = '" . sqlEscape($newName) . "' " .
+			"`username` = '" . sqlEscape($newName) . "' " .
 		"WHERE " .
-			"`UserName` = '" . sqlEscape($name) . "'"
+			"`username` = '" . sqlEscape($name) . "'"
 		);
 
 		$tables = array("radacct", "radcheck", "radreply");
@@ -413,15 +437,15 @@ function changeUserName($name, $newName)
 			sqlQuery(
 				"UPDATE `" . $config["sql_table_" . $table] . "` " .
 					"SET " .
-						"`UserName` = '" . sqlEscape($newName) . "' " .
+						"`username` = '" . sqlEscape($newName) . "' " .
 					"WHERE " .
-						"`UserName` = '" . sqlEscape($name) . "'"
+						"`username` = '" . sqlEscape($name) . "'"
 			);
 		}
 }
 
 /* returns void */
-function changeGroupName($name, $newName)
+function changegroupname($name, $newName)
 {
 	global $config;
 
@@ -434,9 +458,9 @@ function changeGroupName($name, $newName)
 	sqlQuery(
 		"UPDATE `" . $config["sql_table_usergroup"] . "` " .
 		"SET " .
-			"`GroupName` = '" . sqlEscape($newName) . "' " .
+			"`groupname` = '" . sqlEscape($newName) . "' " .
 		"WHERE " .
-			"`GroupName` = '" . sqlEscape($name) . "'"
+			"`groupname` = '" . sqlEscape($name) . "'"
 	);
 
 		$tables = array( "radgroupcheck", "radgroupreply");
@@ -445,9 +469,9 @@ function changeGroupName($name, $newName)
 			sqlQuery(
 				"UPDATE `" . $config["sql_table_" . $table] . "` " .
 				"SET " .
-					"`GroupName` = '" . sqlEscape($newName) . "' " .
+					"`groupname` = '" . sqlEscape($newName) . "' " .
 				"WHERE " .
-					"`GroupName` = '" . sqlEscape($name) . "'"
+					"`groupname` = '" . sqlEscape($name) . "'"
 			);
 		}
 }
@@ -465,35 +489,35 @@ function cloneUser($oldName, $newName)
 
 	sqlQuery(
 		"INSERT INTO `" . $config["sql_table_usergroup"] . "` " .
-			"(UserName, GroupName) " .
+			"(username, groupname) " .
 		"SELECT " .
-			"'" . sqlEscape($newName) . "', GroupName " .
+			"'" . sqlEscape($newName) . "', groupname " .
 		"FROM " .
 			"`" . $config["sql_table_usergroup"] . "` " .
 		"WHERE " .
-			"`UserName` = '" . sqlEscape($oldName) . "'"
+			"`username` = '" . sqlEscape($oldName) . "'"
 	);
 
 	sqlQuery(
 		"INSERT INTO `" . $config["sql_table_radreply"] . "` " .
-			"(UserName, Attribute, op, Value) " .
+			"(username, attribute, op, value) " .
 		"SELECT " .
-			"'" . sqlEscape($newName) . "', Attribute, op, Value " .
+			"'" . sqlEscape($newName) . "', attribute, op, value " .
 		"FROM " .
 			"`" . $config["sql_table_radreply"] . "` " .
 		"WHERE " .
-			"`UserName` = '" . sqlEscape($oldName) . "'"
+			"`username` = '" . sqlEscape($oldName) . "'"
 	);
 
 	sqlQuery(
 		"INSERT `" . $config["sql_table_radcheck"] . "` " .
-			"(UserName, Attribute, op, Value) " .
+			"(username, attribute, op, value) " .
 		"SELECT " .
-			"'" . sqlEscape($newName) . "', Attribute, op, Value " .
+			"'" . sqlEscape($newName) . "', attribute, op, value " .
 		"FROM " .
 			"`" . $config["sql_table_radcheck"] . "` " .
 		"WHERE " .
-			"`UserName` = '" . sqlEscape($oldName) . "'"
+			"`username` = '" . sqlEscape($oldName) . "'"
 	);
 }
 
@@ -515,31 +539,31 @@ function cloneGroup($oldName, $newName)
 
 	/* ugly code below ;-P
 	sqlQuery("INSERT `" . $config["sql_table_usergroup"] .
-		"` (UserName, GroupName)  SELECT " .
-		"'" . sqlEscape($newName) . "' , GroupName" .
-		" FROM `" . $config["sql_table_usergroup"] . "` WHERE `GroupName`='" . sqlEscape($oldName) . "'");
+		"` (username, groupname)  SELECT " .
+		"'" . sqlEscape($newName) . "' , groupname" .
+		" FROM `" . $config["sql_table_usergroup"] . "` WHERE `groupname`='" . sqlEscape($oldName) . "'");
 	*/
 
 	sqlQuery(
 		"INSERT `" . $config["sql_table_radgroupreply"] . "` " .
-			"(GroupName, Attribute, op, Value) " .
+			"(groupname, attribute, op, value) " .
 		"SELECT " .
-			"'" . sqlEscape($newName) . "', Attribute, op, Value " .
+			"'" . sqlEscape($newName) . "', attribute, op, value " .
 		"FROM " .
 			"`" . $config["sql_table_radgroupreply"] . "` " .
 		"WHERE " .
-			"`GroupName` = '" . sqlEscape($oldName) . "'"
+			"`groupname` = '" . sqlEscape($oldName) . "'"
 	);
 
 	sqlQuery(
 		"INSERT `" . $config["sql_table_radgroupcheck"] . "` " .
-			"(GroupName, Attribute, op, Value) " .
+			"(groupname, attribute, op, value) " .
 		"SELECT " .
-			"'" . sqlEscape($newName) . "', Attribute, op, Value " .
+			"'" . sqlEscape($newName) . "', attribute, op, value " .
 		"FROM " .
 			"`" . $config["sql_table_radgroupcheck"] . "` " .
 		"WHERE " .
-			"`GroupName` = '" . sqlEscape($oldName) . "'"
+			"`groupname` = '" . sqlEscape($oldName) . "'"
 	);
 }
 
@@ -560,7 +584,7 @@ function deleteUser($name)
 			"DELETE " .
 			"   FROM `" . $config["sql_table_" . $table] . "` " .
 			"WHERE " .
-			"   `UserName` = '" . sqlEscape($name) . "'"
+			"   `username` = '" . sqlEscape($name) . "'"
 		);
 	}
 }
@@ -577,7 +601,7 @@ function deleteGroup($name)
 		"DELETE " .
 			"FROM `" . $config["sql_table_usergroup"] . "` " .
 		"WHERE " .
-			"`GroupName` = '" . sqlEscape($name) . "'"
+			"`groupname` = '" . sqlEscape($name) . "'"
 	);
 
 	$tables = array("radgroupcheck", "radgroupreply");
@@ -586,13 +610,13 @@ function deleteGroup($name)
 			"DELETE " .
 				"FROM `" . $config["sql_table_" . $table] . "` " .
 			"WHERE " .
-				"`GroupName` = '" . sqlEscape($name) . "'"
+				"`groupname` = '" . sqlEscape($name) . "'"
 		);
 	}
 }
 
 /* returns simple array of atributes names */
-function getCommonAttributes()
+function getCommonattributes()
 {
 	global $config;
 
@@ -601,12 +625,12 @@ function getCommonAttributes()
 
 	foreach ($tables as $tableName) {
 		$list = sqlQuery(
-		        	"SELECT DISTINCT Attribute " .
+		        	"SELECT DISTINCT attribute " .
 		        		"FROM `" . $config["sql_table_" . $tableName] . "`"
 		        );
 
 		foreach ($list as $id => $attr)
-			$output[] = trim($attr["Attribute"]);
+			$output[] = trim($attr["attribute"]);
 
 	}
 	
@@ -638,29 +662,29 @@ function getUserGroups($user)
 }
 
 /* returns void */
-function changeUserGroup($user, $oldGroupName, $newGroupName)
+function changeUserGroup($user, $oldgroupname, $newgroupname)
 {
 	global $config;
 
 	if (!userExists($user))
 		throw new Exception("user does not exists");
 
-	if ($user == "" || $oldGroupName == "" || $newGroupName == "")
+	if ($user == "" || $oldgroupname == "" || $newgroupname == "")
 		throw new Exception("empty argument");
 
-	if (in_array($newGroupName, getUserGroups($user)))
+	if (in_array($newgroupname, getUserGroups($user)))
 		throw new Exception("user is already in that group");
 
 	sqlQuery(
 		"UPDATE `" . $config["sql_table_usergroup"] . "` " .
 		"SET " .
 			"`" . SQL_USERGROUP_COLUMN_GROUP . "` = '" .
-				sqlEscape($newGroupName) . "' " .
+				sqlEscape($newgroupname) . "' " .
 		"WHERE " .
 			"`" . SQL_USERGROUP_COLUMN_USER . "` = '" .
 				sqlEscape($user) . "' AND " .
 			"`" . SQL_USERGROUP_COLUMN_GROUP . "` = '" .
-				sqlEscape($oldGroupName) . "' " .
+				sqlEscape($oldgroupname) . "' " .
 		"LIMIT 1"
 	);
 }
@@ -703,7 +727,7 @@ function addUserGroup($user, $group)
 		"INSERT INTO `" . $config["sql_table_usergroup"] . "` " .
 			"(" . SQL_USERGROUP_COLUMN_USER . ", " .
 			SQL_USERGROUP_COLUMN_GROUP . ") " .
-		"VALUES (" .
+		"valueS (" .
 			"'" . sqlEscape($user) ."', " .
 			"'" . sqlEscape($group) . "'" .
 		")"
@@ -714,14 +738,14 @@ function addUserGroup($user, $group)
 function userExists($name)
 {
 	global $config;
-	return in_array($name, getUserNames());
+	return in_array($name, getusernames());
 }
 
 /* returns bool */
 function groupExists($name)
 {
 	global $config;
-	return in_array($name, getGroupNames());
+	return in_array($name, getgroupnames());
 }
 
 /* returns array of associative arrays describing session */
@@ -729,13 +753,10 @@ function getActiveSessions()
 {
 	global $config;
 	return sqlQuery(
-		"SELECT *, " .
-			"(unix_timestamp(NOW()) - unix_timestamp(`" .
-			SQL_ACCT_COLUMN_STARTTIME . "`)) AS `" .
-			SQL_ACCT_COLUMN_ACTIVETIME ."` " .
+		"SELECT * " .
 			"FROM `" .  $config["sql_table_radacct"]. "` " .
 		"WHERE " .
-			"`" . SQL_ACCT_COLUMN_STOPTIME . "` = 0"
+			"`" . SQL_ACCT_COLUMN_STOPTIME . "` IS NULL"
 	);
 }
 
@@ -744,12 +765,12 @@ function getUserActiveSessions($user)
 {
 	global $config;
 	return sqlQuery(
-		"SELECT *, (unix_timestamp(NOW()) - unix_timestamp(`AcctStartTime`)) AS `RealSessionTime` " .
+		"SELECT * " .
 			"FROM `" . $config["sql_table_radacct"] . "` " .
 		"WHERE " .
-			"AcctStopTime = 0 AND " .
-			"UserName = '" . sqlEscape($user). "' " .
-		"ORDER BY AcctStartTime DESC"
+			"`" . SQL_ACCT_COLUMN_STOPTIME . "` IS NULL AND " .
+			"username = '" . sqlEscape($user). "' " .
+		"ORDER BY acctstarttime DESC"
 	);
 }
 
@@ -759,12 +780,12 @@ function getNasActiveSessions($nas_ip)
 {
 	global $config;
 	return sqlQuery(
-		"SELECT *, (unix_timestamp(NOW()) - unix_timestamp(`AcctStartTime`)) AS `RealSessionTime` " .
+		"SELECT * " .
 			"FROM `" . $config["sql_table_radacct"] . "` " .
 		"WHERE " .
-			"AcctStopTime = 0 AND " .
+			"`" . SQL_ACCT_COLUMN_STOPTIME . "` IS NULL AND " .
 			"`" . SQL_ACCT_COLUMN_NASIP . "` = '" . sqlEscape($nas_ip). "' " .
-		"ORDER BY AcctStartTime DESC"
+		"ORDER BY acctstarttime DESC"
 	);
 }
 /* returns array of associative arrays describing unclosed sessions of $user */
@@ -776,8 +797,8 @@ function getUserLastSession($user)
 		"SELECT * " .
 			"FROM `" . $config["sql_table_radacct"] . "` " .
 		"WHERE " .
-			"UserName = '" . sqlEscape($user) . "' " .
-		"ORDER BY AcctStartTime DESC " .
+			"username = '" . sqlEscape($user) . "' " .
+		"ORDER BY acctstarttime DESC " .
 		"LIMIT 1"
 	);
 
@@ -794,12 +815,12 @@ function getUserOnlineTime($user)
 
 	$out = sqlQuery(
 	       	"SELECT " .
-	       		"(unix_timestamp(NOW()) - unix_timestamp(`AcctStartTime`)) " .
+	       		"(unix_timestamp(NOW()) - unix_timestamp(`acctstarttime`)) " .
 	       	"FROM `" . $config["sql_table_radacct"] . "` " .
 	       	"WHERE " .
-	       		"AcctStopTime = 0 AND " .
-	       		"UserName = '" . sqlEscape($user). "' " .
-	       	"ORDER BY AcctStartTime DESC " .
+	       		"acctstoptime IS NULL AND " .
+	       		"username = '" . sqlEscape($user). "' " .
+	       	"ORDER BY acctstarttime DESC " .
 	       	"LIMIT 1"
 	       );
 
@@ -813,12 +834,12 @@ function getUserOfflineTime($user)
 
 	$out = sqlQuery(
 	       	"SELECT " .
-	       		"(unix_timestamp(NOW()) - unix_timestamp(`AcctStartTime`)) " .
+	       		"(unix_timestamp(NOW()) - unix_timestamp(`acctstarttime`)) " .
 	       	"FROM `" . $config["sql_table_radacct"] . "` " .
 	       	"WHERE " .
-	       		"AcctStopTime != 0 AND " .
-	       		"UserName = '" . sqlEscape($user). "' " .
-	       	"ORDER BY AcctStartTime DESC " .
+	       		"acctstoptime IS NOT NULL AND " .
+	       		"username = '" . sqlEscape($user). "' " .
+	       	"ORDER BY acctstarttime DESC " .
 	       	"LIMIT 1"
 	       );
 
@@ -837,16 +858,16 @@ function getUserAccounting($user, $from, $to)
 	       	"SELECT * " .
 	       		"FROM `" . $config["sql_table_radacct"] . "` " .
 	       	"WHERE " .
-	       		"`UserName` = '" . sqlEscape($user) . "' AND " .
+	       		"`username` = '" . sqlEscape($user) . "' AND " .
 	       		"(" .
 	       			"DATE_SUB(" .
 	       				"CURDATE(), INTERVAL " . sqlEscape($from) . " DAY" .
-	       			") < `AcctStartTime` AND " .
+	       			") < `acctstarttime` AND " .
 	       			"DATE_SUB(" .
 	       				"CURDATE(), INTERVAL " . sqlEscape($to) . " DAY" .
-	       			") > `AcctStartTime`" .
+	       			") > `acctstarttime`" .
 	       		") " .
-	       	"ORDER BY `AcctStartTime` DESC"
+	       	"ORDER BY `acctstarttime` DESC"
 	       );
 
 	return $out;
@@ -860,16 +881,16 @@ function getNasAccounting($nas_ip, $from, $to)
 	       	"SELECT * " .
 	       		"FROM `" . $config["sql_table_radacct"] . "` " .
 	       	"WHERE " .
-	       		"`NASIPAddress` = '" . sqlEscape($nas_ip) . "' AND " .
+	       		"`nasipaddress` = '" . sqlEscape($nas_ip) . "' AND " .
 	       		"(" .
 	       			"DATE_SUB(" .
 	       				"CURDATE(), INTERVAL " . sqlEscape($from) . " DAY" .
-	       			") < `AcctStartTime` AND " .
+	       			") < `acctstarttime` AND " .
 	       			"DATE_SUB(" .
 	       				"CURDATE(), INTERVAL " . sqlEscape($to) . " DAY" .
-	       			") > `AcctStartTime`" .
+	       			") > `acctstarttime`" .
 	       		") " .
-	       	"ORDER BY `AcctStartTime` DESC"
+	       	"ORDER BY `acctstarttime` DESC"
 	       );
 
 	return $out;
@@ -887,12 +908,12 @@ function getAccounting($arg_name, $like, $from, $to) {
 	       		"(" .
 	       			"DATE_SUB(" .
 	       				"CURDATE(), INTERVAL " . sqlEscape($from) . " DAY" .
-	       			") < `AcctStartTime` AND " .
+	       			") < `acctstarttime` AND " .
 	       			"DATE_SUB(" .
 	       				"CURDATE(), INTERVAL " . sqlEscape($to) . " DAY" .
-	       			") > `AcctStartTime`" .
+	       			") > `acctstarttime`" .
 	       		") " .
-	       	"ORDER BY `AcctStartTime` DESC"
+	       	"ORDER BY `acctstarttime` DESC"
 	       );
 
 	return $out;
@@ -907,13 +928,13 @@ function getAccountingAtTime($time) {
 			"FROM `" . $config["sql_table_radacct"] . "` " .
 		"WHERE " .
 			"(" .
-			"'" . sqlEscape($time) . "'" . " > `AcctStartTime` AND " .
+			"'" . sqlEscape($time) . "'" . " > `acctstarttime` AND " .
 			"(" .
-				"'" . sqlEscape($time) .  "'" . " < `AcctStopTime` OR " .
-				"`AcctStopTime` = 0 " .
+				"'" . sqlEscape($time) .  "'" . " < `acctstoptime` OR " .
+				"`acctstoptime` = 0 " .
 			") " .
 			") " .
-			"ORDER BY `AcctStartTime` DESC"
+			"ORDER BY `acctstarttime` DESC"
 		);
 
 	return $out;
@@ -929,12 +950,12 @@ function getUserTransferedOctets($user, $days)
 				"SUM(`" . SQL_ACCT_COLUMN_UPLOAD . "`) AS `" . SQL_ACCT_COLUMN_UPLOAD . "` " .
 	       	"FROM `" . $config["sql_table_radacct"] . "` " .
 	       	"WHERE " .
-	       		"`UserName` = '" . sqlEscape($user) . "' AND " .
+	       		"`username` = '" . sqlEscape($user) . "' AND " .
 	       		"(" .
 	       			"DATE_SUB(" .
 	       				"CURDATE(), INTERVAL " . sqlEscape($days) . " DAY" .
-	       			") < `AcctStopTime` OR " .
-	       			"`AcctStopTime` = 0" .
+	       			") < `acctstoptime` OR " .
+	       			"`acctstoptime` = 0" .
 	       		")"
 	       );
 
@@ -968,8 +989,8 @@ function getNasTransferedOctets($nas_ip, $days)
 				"(" .
 					"DATE_SUB(" .
 					"CURDATE(), INTERVAL " . sqlEscape($days) . " DAY" .
-					") < `AcctStopTime` OR " .
-					"`AcctStopTime` = 0" .
+					") < `acctstoptime` OR " .
+					"`acctstoptime` = 0" .
 				")"
 		);
 
@@ -996,7 +1017,7 @@ function getTodayTransferedOctets()
 	/* NEW VERSION: mysql >= 4.1.1 */
 /*	$out = sqlQuery("SELECT SUM(`AcctInputOctets`) AS `Input`, SUM(`AcctOutputOctets`) AS `Output` " .
 		"FROM " . $config["sql_table_radacct"] . 
-		" WHERE   DATE(AcctStartTime) = CURDATE()"); */
+		" WHERE   DATE(acctstarttime) = CURDATE()"); */
 
 	$out = sqlQuery(
 	       	"SELECT " .
@@ -1004,8 +1025,8 @@ function getTodayTransferedOctets()
 				"SUM(`" . SQL_ACCT_COLUMN_DOWNLOAD . "`) AS `" . SQL_ACCT_COLUMN_DOWNLOAD . "` " .
 	       	"FROM `" . $config["sql_table_radacct"] . "` " .
 	       	"WHERE " .
-	       		"DATE_FORMAT(AcctStartTime, '%Y-%m-%d') = CURDATE() OR " .
-	       		"`AcctStopTime` = 0"
+	       		"DATE_FORMAT(acctstarttime, '%Y-%m-%d') = CURDATE() OR " .
+	       		"`acctstoptime` = 0"
 	       );
 
 	if(!isset($out[0][SQL_ACCT_COLUMN_DOWNLOAD]))
@@ -1029,8 +1050,8 @@ function getGlobalTransferedOctets($days)
 	       	"WHERE ".
 	       		"DATE_SUB(" .
 	       			"CURDATE(), INTERVAL " . sqlEscape($days) . " DAY" .
-	       		") < `AcctStopTime` OR " .
-	       		"`AcctStopTime` = 0"
+	       		") < `acctstoptime` OR " .
+	       		"`acctstoptime` = 0"
 	       );
 
 	if(!isset($out[0][0]))
@@ -1060,8 +1081,8 @@ function getTopNasTransferedOctets($days, $limit, $sort_by, $reverse)
 			"WHERE ".
 				"DATE_SUB(" .
 					"CURDATE(), INTERVAL " . sqlEscape($days) . " DAY" .
-				") < `AcctStopTime` OR " .
-				"`AcctStopTime` = 0 " .
+				") < `acctstoptime` OR " .
+				"`acctstoptime` = 0 " .
 			"GROUP BY `" . SQL_ACCT_COLUMN_NASIP . "` " .
 			"ORDER BY `" . $sort_by . "` ";
 
@@ -1090,8 +1111,8 @@ function getTopUserTransferedOctets($days, $limit, $sort_by, $reverse)
 			"WHERE ".
 				"DATE_SUB(" .
 					"CURDATE(), INTERVAL " . sqlEscape($days) . " DAY" .
-				") < `AcctStopTime` OR " .
-				"`AcctStopTime` = 0 " .
+				") < `acctstoptime` OR " .
+				"`acctstoptime` = 0 " .
 				"GROUP BY `" . SQL_ACCT_COLUMN_USER . "` " .
 			"ORDER BY `" . $sort_by . "` ";
 
@@ -1118,7 +1139,7 @@ function addNas($name, $longName, $type, $ports,
 	sqlQuery(
 		"INSERT INTO `" . $config["sql_table_nas"] . "` " .
 			"(nasname, shortname, type, ports, secret, community, description) " .
-		"VALUES (" .
+		"valueS (" .
 			"'" . sqlEscape($longName) ."', " .
 			"'" . sqlEscape($name) ."', " .
 			"'" . sqlEscape($type) ."', " .

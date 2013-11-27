@@ -74,7 +74,7 @@ else {
 			$tpl->setVariable("times", count($activeSessions));
 		}
 
-		$tpl->setVariable("since", $activeSessions[0]["AcctStartTime"]);
+		$tpl->setVariable("since", $activeSessions[0]["acctstarttime"]);
 		$tpl->setVariable("for", secToStr(getUserOnlineTime($user)));
 
 		if ($config["use_user_killer"]) {
@@ -88,7 +88,7 @@ else {
 	else {
 		$tpl->setVariable("session_type", i18n("last_session"));
 		$tpl->setVariable("state", $i18n["i18n_offline"]);
-		$tpl->setVariable("since", $lastSession["AcctStopTime"]);
+		$tpl->setVariable("since", $lastSession["acctstoptime"]);
 		$tpl->setVariable("for", secToStr(getUserOfflineTime($user)));
 	}
 
@@ -99,11 +99,11 @@ else {
 		$tpl->setVariable("server_port", "N/A");
 		$tpl->setVariable("since", "N/A");
 	} else {
-		$tpl->setVariable("server", $lastSession["NASIPAddress"]);
-		$tpl->setVariable("server_port", $lastSession["NASPortId"]);
-		if ($lastSession["CallingStationId"] == "")
-			$lastSession["CallingStationId"] = "&nbsp;";
-		$tpl->setVariable("current_workstation", $lastSession["CallingStationId"]);
+		$tpl->setVariable("server", $lastSession["nasipaddress"]);
+		$tpl->setVariable("server_port", $lastSession["nasportid"]);
+		if ($lastSession["callingstationid"] == "")
+			$lastSession["callingstationid"] = "&nbsp;";
+		$tpl->setVariable("current_workstation", $lastSession["callingstationid"]);
 		$tpl->setVariable("current_ip", $lastSession[SQL_ACCT_COLUMN_USERIP]);
 
 		$nas_names = getNasNames();        /* $nas_names["IP"] == "name"; */

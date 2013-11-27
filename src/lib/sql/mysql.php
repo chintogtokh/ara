@@ -46,7 +46,7 @@ function sqlQuery($query, $quiet = FALSE)
 	global $mysql_connection;
 
 	if ($config["sql_debug"])
-		echo "DEBUG[sql]: $query<br/>";
+		echo "DEBUG[sql]: $query\n<br/>";
 
 	$resource = mysql_query($query, $mysql_connection);
 	if ($resource === FALSE) {

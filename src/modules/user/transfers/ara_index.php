@@ -69,7 +69,7 @@ $tpl->setCurrentBlock("user_list");
 $count = 1;
 
 foreach ($rates as $user) {
-	$user_name = $user["UserName"];
+	$user_name = $user["username"];
 	$tpl->setVariable("user_name", $user_name);
 	$tpl->setVariable("user_no", $count);
 	$count++;
