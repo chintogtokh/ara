@@ -134,9 +134,8 @@ input:focus {
 	width: 12em;
 	margin: 1em;
 	padding: 1em;
-	border: 1px dotted #888888;
 	background-color: #fffae0;
-	text-align: right;
+	text-align: left;
 }
 
 #main_menu h2 {
@@ -155,8 +154,6 @@ input:focus {
 	padding: 1em;
 	/*padding-top: 0em;*/
 	padding-bottom: 2em;
-
-	border: 1px dotted #888888;
 	background-color: #fffae0;
 }
 
@@ -253,6 +250,7 @@ input:focus {
 #main_menu ul {
 	list-style-type:none;
 	margin: 0px;
+	padding:2px;
 }
 
 #main_menu ul a, #main_menu ul a.visited {

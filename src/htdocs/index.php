@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL);  // will report any errors your code may have
+ini_set("display_errors", 1); // will display those errors
 /* Asn Radius Admin
  * Copyright (C) ASN http://www.asn.pl 2007
  *           and Dawid Ciezarkiewicz <dpc@asn.pl> 2007
@@ -20,7 +22,7 @@
  */
 
 /* CHANGEME: path to ARA, relative to dir of index.php */
-define("ARA_PATH", "../");
+define("ARA_PATH", "/var/ara/src");
 
 /* ARA version */
 define("ARA_VERSION", "0.6");
