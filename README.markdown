@@ -1,7 +1,7 @@
 ARA - a FreeRADIUS web interface
 
 ASN RADIUS Admin Installation Guide
-===================================
+====================================
 
 Requirements
 ------------
