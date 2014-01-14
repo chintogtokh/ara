@@ -7,75 +7,46 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<meta name="description" content="radius administration page" />
 
-		<style type="text/css" media="screen"> @import url(./style.css); </style>
+		<!--<style type="text/css" media="screen"> @import url(./style.css); </style>-->
+		<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css" />
+		<link rel="stylesheet" type="text/css" href="assets/css/bootstrap-theme.css" />
+		<link rel="stylesheet" type="text/css" href="assets/css/style.css" />
+
+		<script src="assets/js/jquery-1.10.2.js"></script>
+		<script src="assets/js/bootstrap.js"></script>
+		<script src="assets/js/custom.js"></script>
+
+		</script>
 		<link rel="icon" href="img/logo.png" type="image/png" />
 		<!-- BEGIN refreshing -->
 		<meta http-equiv="REFRESH" content="300" />
 		<!-- END refreshing -->
 	</head>
-	<script language="JavaScript">
-		function cmdFocus()
-		{
-			if (document.getElementById('module_focus')) {
-				document.getElementById('module_focus').focus();
-			} else {
-				document.getElementById('quick_input').focus();
-			}
-			return false;
-		}
-	</script>
-	<body onLoad="cmdFocus()">
-		<div id="fixed_bar">
-			<p class="quick_command">
-				<!-- <a href="http://www.asn.pl/" ><img id="logo" src="img/asn.png" alt="ASN"/></a> -->
-				<a href="./" accesskey="">{i18n_main_page}</a>&nbsp;
-			</p>
-			<!-- BEGIN quick -->
-			<form method="get" action="./" >
-				<p class="quick_command">
-				<label for="quick_input" accesskey="Q">
-				|&nbsp;
-				{i18n_quick}:&nbsp;
-				</label>
-				<input id="quick_input" class="text" type="text" name="value" value=""/>
-				<input class="hidden" type="hidden" name="mg" value="misc"/>
-				<input class="hidden" type="hidden" name="mm" value="quick-link"/>
-				<select name="type" >
-					<!-- BEGIN quick_user_by_phone -->
-					<option value="user-by-name" {qubsel_by_name}>
-						{i18n_user_by_name}
-					</option>
-					<option value="user-by-phone" {qubsel_by_phone}>
-						{i18n_user_by_phone}
-					</option>
-					<option value="user-by-address" {qubsel_by_address}>
-						{i18n_user_by_address}
-					</option>
-					<!-- END quick_user_by_phone -->
-					<option value="user-by-login" {qubsel_by_login}>
-						{i18n_user_by_login}
-					</option>
-					<option value="user-by-mac" {qubsel_by_mac}>
-						{i18n_user_by_mac}
-					</option>
-					<option value="nas-by-name" {qubsel_nas_by_name}>
-						{i18n_nas_by_name}
-					</option>
-				</select>
-				<input type="submit" value="{i18n_ok}"/>
-				</p>
-			</form>
-			<!-- END quick -->
-			<!-- BEGIN quick_stats -->
-			<p class="quick_command">
-			&nbsp;<b>{i18n_today}</b>
-			{i18n_download}: {quick_stats_download}
-			{i18n_upload}: {quick_stats_upload}
-			</p>
-			<!-- END quick_stats -->
 
-		</div>
-		<div id="main_menu">
+	<body>
+
+		<header class="navbar navbar-inverse navbar-fixed-top bs-docs-nav" role="banner">
+	      <div class="container">
+	        <div class="navbar-header">
+	          <a class="navbar-brand" href="./" accesskey="">{i18n_main_page}</a>
+	        </div>
+	        <nav class="collapse navbar-collapse">
+	        	<form class="navbar-form navbar-right" method="get" action="./" >
+	        	<ul class="nav navbar-nav">
+	        		
+			        <li>
+			        	<!--Other stuff here. Previous stuff removed-->
+			        </li>
+	        	</ul>
+	        </form>
+	        </nav>
+	      </div>
+	    </header>
+
+
+		<div class="container">
+		<div class="row">
+		<div id="main_menu" class="col-md-3">
 
 			<!-- <h1>ARA</h1>-->
 			<h2>{i18n_modules}</h2>
@@ -93,7 +64,7 @@
 			<!-- END mg_list -->
 		</div>
 		<!-- BEGIN module_output -->
-		<div id="main_page">
+		<div id="main_page" class="col-md-9">
 			<!-- BEGIN fatal_error -->
 			<div><span class="error">{i18n_fatal_error_occured}: {msg}.</span></div>
 			<!-- END fatal_error -->
@@ -104,6 +75,8 @@
 
 			<p id="corner_note">{date_and_time}</p>
 			{module_generated}
+		</div>
+		</div>
 		</div>
 		<!-- END module_output -->
 	</body>

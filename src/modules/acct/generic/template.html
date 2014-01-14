@@ -39,45 +39,53 @@
 	</table>
 </div>
 <div id="bottom_note">
-	<form action="./">
+	<form class="form-inline" action="./">
+		<div class="form-group">
 		<input type="hidden" class="hidden" name="mm" value="{mm}" />
 		<input type="hidden" class="hidden" name="mg" value="{mg}" />
-		{i18n_from}:
-		<input type="text" name="from" value="{from}" />
-		{i18n_days_ago}
-		<br/>
-		{i18n_to}:
-		<input type="text" name="to" value="{to}" />
-		{i18n_days_ago}
-
-		<br/>
-		{i18n_search}:
-		<select name="search" editable>
-			<!-- BEGIN search_bar_look_for -->
-			<option value="{search}">{search}</option>
-			<!-- END search_bar_look_for -->
-		</select>
-
-		<input type="text" name="value" value="{value}" />
-		<br/>
-
-		{i18n_unique}:
-		<select name="unique" editable>
-			<!-- BEGIN search_bar_unique -->
-			<option value="{unique}">{unique}</option>
-			<!-- END search_bar_unique -->
-		</select>
-
-		<br/>
-		<select name="format" editable>
-			<option value="html">html</option>
-			<!-- BEGIN pdf_output_support -->
-			<option value="pdf">pdf</option>
-			<!-- END pdf_output_support -->
-		</select>
-		<br/>
-
-		<input type="submit"  value="{i18n_ok}"/>
+		<div class="row">
+			<div class="col-sm-3">{i18n_from}:</div>
+			<div class="col-sm-3"><input type="text" name="from" value="{from}" /></div>
+			<div class="col-sm-3">{i18n_days_ago}</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-3">{i18n_to}:</div>
+			<div class="col-sm-3"><input type="text" name="to" value="{to}" /></div>
+			<div class="col-sm-3">{i18n_days_ago}</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-3">{i18n_search}:</div>
+			<div class="col-sm-4">
+				<select name="search" editable>
+				<!-- BEGIN search_bar_look_for -->
+				<option value="{search}">{search}</option>
+				<!-- END search_bar_look_for -->
+				</select>
+			</div>
+			<div class="col-sm-3">
+				<input type="text" name="value" value="{value}" />
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-3">{i18n_unique}:</div>
+			<div class="col-sm-3"><select name="unique" editable>
+				<!-- BEGIN search_bar_unique -->
+				<option value="{unique}">{unique}</option>
+				<!-- END search_bar_unique -->
+			</select></div>
+		</div>
+		<div class="row">
+			<div class="col-sm-3"><select name="format" editable>
+				<option value="html">html</option>
+				<!-- BEGIN pdf_output_support -->
+				<option value="pdf">pdf</option>
+				<!-- END pdf_output_support -->
+			</select></div>
+		</div>
+		<div class="row">
+			<input class="btn btn-default" type="submit"  value="{i18n_ok}"/>
+		</div class="row">
+	</div>
 	</form>
 	
 </div>

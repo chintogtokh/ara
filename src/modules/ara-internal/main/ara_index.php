@@ -37,6 +37,17 @@ switch ($lang) {
 			"naszego projektu</a>.");
 		break;
 
+	case "mn":
+		$tpl->setVariable("welcome", "Asn Radius Admin (ARA) v. " .
+			ARA_VERSION . "-д тавтай морилно уу!");
+		$tpl->setVariable("license", "Энэ програм нь нээлттэй эхийн чөлөөт програм хангамж бөгөөд " .
+			"GNU General Public лицензийн дагуу түгээж, өөрчлөх боломжтой. COPYING файлыг харж " .
+			"<a href=\"http://www.gnu.org/licenses/gpl.html\">GNU лицензийн</a> бичиг баримтыг харна уу.");
+		$tpl->setVariable("arainfo", "ARA-г хөгжүүлэгч нь " .
+			"<a href=\"http://www.asn.pl/\">ASN</a> бөгөөд " .
+			"<a href=\"http://projects.asn.pl/ara/\"> төслийн вэбсайтад</a> зочилно уу.");
+		break;
+
 	default:
 		$tpl->setVariable("welcome", "Welcome in Asn Radius Admin (ARA) v. " .
 			ARA_VERSION . "!");
