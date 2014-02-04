@@ -1424,4 +1424,31 @@ function modUserExtInfo($user, $name, $address, $email,
 		throw new Exception("no modUserExtInfo_Impl");
 }
 
+
+/*Custom stuff*/
+function getPaymentInformation($days)
+{
+	global $config;
+
+	$out = sqlQuery(
+	       	"SELECT " .
+				"SUM(`" . "payment" . "`) AS `" . "payments" . "` " .
+	       	"FROM `" . "payment_externalusers" . "` " .
+	       	"WHERE (".
+	       		"`timestamp` >= CURRENT_TIMESTAMP - INTERVAL " . sqlEscape($days) . " DAY);"
+	       );
+
+
+	if(!isset($out[0][0]))
+		$out[0][0] = 0;
+
+	if(!isset($out[0][1]))
+		$out[0][1] = 0;
+
+	if(!isset($out[0]["payments"]))
+		$out[0]["payments"] = 0;
+
+	return $out[0];
+}
+
 ?>

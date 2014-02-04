@@ -1,6 +1,7 @@
 <?php
 
 $i18n = array(
+	"i18n_payment" =>"płatność",
 	"i18n_lang" => "pl",
 	"i18n_action" => "akcja",
 	"i18n_action_not_allowed" => "Nie jesteś uprawniony do wykonania tej akcji. Sprawdź swoje uprawnienia w pliku config.php albo poproś o to administratora ARA'y",

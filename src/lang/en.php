@@ -1,6 +1,7 @@
 <?php
 
 $i18n = array(
+	"i18n_payment" =>"payment",
 	"i18n_lang" => "en",
 	"i18n_action" => "action",
 	"i18n_action_not_allowed" => "You don't have permissions to execute this action. Check your permissions in config.php file or ask ARA administrator to do so",
