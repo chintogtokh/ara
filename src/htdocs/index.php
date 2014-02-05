@@ -1,4 +1,5 @@
 <?php
+session_start();
 error_reporting(E_ALL);  // will report any errors your code may have
 ini_set("display_errors", 1); // will display those errors
 /* Asn Radius Admin
@@ -99,6 +100,7 @@ $tpl->setGlobalVariable('date_and_time', date("m.d.y, H:i:s"));
 /* catch critical errors */
 try {
 	/* auth at all? */
+	/*
 	if ($config["use_auth"]) {
 		if (!isset($_SERVER["PHP_AUTH_USER"])) {
 			header("WWW-Authenticate: Basic realm=\"Ara\"");
@@ -128,6 +130,13 @@ try {
 			}
 		}
 	}
+	*/
+
+	//Session based web authentication - Custom
+	if(!isset($_SESSION['loggedin'])){
+		header("Location: login.php");
+	}
+	//TODO
 
 	/* set selected quicksel */
 	if (isset($_COOKIE['quicksel']) && $_COOKIE['quicksel'] != '') {
