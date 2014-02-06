@@ -149,6 +149,9 @@ $i18n = array(
 	"i18n_w__weeks" => "дол. хоног",
 	"i18n_m__months" => "сар",
 	"i18n_y__years" => "жил",
+	#CUSTOM
+
+	"i18n_logout" => "гарах"
 );
 
 ?>

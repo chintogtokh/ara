@@ -26,18 +26,15 @@
 	<body>
 <div class="container">
 <div class="row">
-  <div class="page-header"><h2>Нэвтрэх</h2></div>
+  <div class="page-header"><h3>ARA-д нэвтрэх / Login to ARA</h3></div>
   <form method="post" action="checklogin.php" class="form-horizontal">
-    <fieldset>
-
-      <!-- Form Name -->
-      <legend><h3>Have an account? Sign In</h3></legend>
+    <fieldset>  
 
       <!-- Text input-->
       <div class="form-group">
         <label class="col-md-1 control-label" for="username"></label>  
         <div class="col-md-12">
-          <input id="username" name="username" type="text" placeholder="Username" class="form-control input-md">
+          <input id="username" name="username" type="text" placeholder="Хэрэглэгчийн нэр / Username" class="form-control input-md">
         </div>
       </div>
 
@@ -45,7 +42,7 @@
       <div class="form-group">
         <label class="col-md-1 control-label" for="password"></label>
         <div class="col-md-12">
-          <input id="password" name="password" type="password" placeholder="Password" class="form-control input-md">
+          <input id="password" name="password" type="password" placeholder="Нууц үг / Password" class="form-control input-md">
         </div>
       </div>
 
@@ -53,7 +50,7 @@
       <div class="form-group">
         <label class="col-md-1 control-label" for="login"></label>
       <div class="col-md-10">
-        <button id="login" name="login" class="btn btn-block btn-success">Login</button>
+        <button id="login" name="login" class="btn btn-block btn-success">Нэвтрэх / Login</button>
       </div>
     </fieldset>
   </form>

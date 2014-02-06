@@ -147,6 +147,9 @@ $i18n = array(
 	"i18n_w__weeks" => "weeks",
 	"i18n_m__months" => "months",
 	"i18n_y__years" => "years",
+	#CUSTOM
+
+	"i18n_logout" => "logout",
 );
 
 ?>

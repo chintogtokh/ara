@@ -28,7 +28,7 @@ img {
 
 
 a[accesskey]:hover:before {
-	content: "[" attr(accesskey) "]";
+	content: attr(accesskey) ">";
 }
 
 

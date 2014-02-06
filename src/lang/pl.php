@@ -144,6 +144,11 @@ $i18n = array(
 	"i18n_w__weeks" => "tygodni",
 	"i18n_m__months" => "miesięcy",
 	"i18n_y__years" => "lat",
+
+	#CUSTOM
+
+	"i18n_logout" => "wyloguj"
+	
 );
 
 ?>
