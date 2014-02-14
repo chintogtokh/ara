@@ -29,25 +29,15 @@ $tpl->setCurrentBlock("user_stats");
 $tpl->setGlobalVariable("current_group", $mg);
 $tpl->setGlobalVariable("current_module", $mm);
 
-foreach(array("weekly" => 7, "daily" => 1, "monthly" => 30)
-        as $periodStr => $period) {
-	$transf = getGlobalTransferedOctets($period);
-	$tpl->setVariable($periodStr . "_upload", bytesToStr($transf[SQL_ACCT_COLUMN_UPLOAD]));
-	$tpl->setVariable($periodStr . "_download", bytesToStr($transf[SQL_ACCT_COLUMN_DOWNLOAD]));
-}
-
-/*$pays = getPaymentInformation($period);
-$tpl->setVariable("daily_payment",bytesToStr($pays["payment"]));
-$tpl->setVariable("weekly_payment","2");
-$tpl->setVariable("monthly_payment","2");
-$tpl->setVariable("total_payment","21");*/
-
 
 foreach(array("weekly" => 7, "daily" => 1, "monthly" => 30)
         as $periodStr => $period) {
 	$pays = getPaymentInformation($period);
 	$tpl->setVariable($periodStr . "_payment", (string)$pays[0]);
 }
+
+$pays = getTotalPaymentInformation();
+$tpl->setVariable("total_payment",(string)$pays[0]);
 
 
 ?>

@@ -30,6 +30,13 @@
   <form method="post" action="checklogin.php" class="form-horizontal">
     <fieldset>  
 
+      <?php
+        if(isset($_GET["msg"])){
+          if($_GET["msg"]=="WRONG"){
+            echo "Хэрэглэгчийн нэр эсвэл нууц үг буруу байна / Wrong username or password";
+          }
+        }
+      ?>
       <!-- Text input-->
       <div class="form-group">
         <label class="col-md-1 control-label" for="username"></label>  
@@ -37,7 +44,6 @@
           <input id="username" name="username" type="text" placeholder="Хэрэглэгчийн нэр / Username" class="form-control input-md">
         </div>
       </div>
-
       <!-- Password input-->
       <div class="form-group">
         <label class="col-md-1 control-label" for="password"></label>

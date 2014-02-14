@@ -1451,4 +1451,27 @@ function getPaymentInformation($days)
 	return $out[0];
 }
 
+function getTotalPaymentInformation()
+{
+	global $config;
+
+	$out = sqlQuery(
+	       	"SELECT " .
+				"SUM(`" . "payment" . "`) AS `" . "payments" . "` " .
+	       	"FROM `" . "payment_externalusers" . "` "
+	       );
+
+
+	if(!isset($out[0][0]))
+		$out[0][0] = 0;
+
+	if(!isset($out[0][1]))
+		$out[0][1] = 0;
+
+	if(!isset($out[0]["payments"]))
+		$out[0]["payments"] = 0;
+
+	return $out[0];
+}
+
 ?>

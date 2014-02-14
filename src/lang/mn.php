@@ -151,7 +151,12 @@ $i18n = array(
 	"i18n_y__years" => "жил",
 	#CUSTOM
 
-	"i18n_logout" => "гарах"
+	"i18n_logout" => "гарах",
+	"i18n_payment_daily" => "өдрийн орлого",
+	"i18n_payment_weekly" => "долоо хоногийн орлого",
+	"i18n_payment_monthly" => "сарын орлого",
+	"i18n_payment_total" => "нийт орлого"
+
 );
 
 ?>

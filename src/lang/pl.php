@@ -148,6 +148,12 @@ $i18n = array(
 	#CUSTOM
 
 	"i18n_logout" => "wyloguj"
+
+	"i18n_payment_daily" => "dzienne płatności",
+	"i18n_payment_weekly" => "płatności tygodniowo",
+	"i18n_payment_monthly" => "płatności miesięczne",
+	"i18n_payment_total" => "wszystkich płatności"
+
 	
 );
 
